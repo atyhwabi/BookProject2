@@ -144,7 +144,8 @@ namespace BooksKeeperAPI.Controllers
             {
                 try
                 {
-                    using (var repo = new EntityFrameWorkRepository<BookDBContext>(db))
+                using (var db = new BookDBContext())
+                using (var repo = new EntityFrameWorkRepository<BookDBContext>(db))
                     {
                         repo.Delete<Author>(author);
                         await db.SaveChangesAsync();
