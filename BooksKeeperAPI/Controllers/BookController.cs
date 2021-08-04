@@ -92,9 +92,33 @@ namespace BooksKeeperAPI.Controllers
                 return null;
             }
         }
+        public async Task<Book> Put(Guid authID)
+        {
+            try
+            {
+                using (var db = new BookDBContext())
+                using (var repo = new EntityFrameWorkRepository<BookDBContext>(db))
+                {
+                    var author = await repo.GetByIdAsync<Book>(authID);
+                    if (author != null)
+                    {
+                        return author;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
 
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                return null;
+            }
+        }
         // PUT api/<controller>/5
-        public async Task Put(int id, [FromBody]Book book)
+        public async Task Put(Book book)
         {
             try
             {
